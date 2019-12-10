@@ -82,7 +82,7 @@ class EventListener implements Listener
                 return;
             }
             if (!$player->isOp()) {
-            	$player->sendMessage("§c> 削除できる権限がありません");
+            	$player->sendMessage("§b【運営】>> §c削除できる権限がありません");
             	$event->setCancelled();
             	return;
             }
@@ -91,7 +91,7 @@ class EventListener implements Listener
                 case API::SELL_TAG:
                 case API::EXCHANGE_TAG:
                     $this->getProvider()->removeShopData($block);
-                    $player->sendMessage("§a> 削除しました");
+                    $player->sendMessage("§b【運営】>> §e削除しました");
                     break;
             }
         }
@@ -107,7 +107,7 @@ class EventListener implements Listener
         if (empty($line[2])) return;
         if (!in_array($line[0], API::REQUIRE_FIRST_LINE)) return;
         if (!$player->isOp()) {
-            $player->sendMessage("§c> 製作できる権限がありません");
+            $player->sendMessage("§b【運営】>> §c製作できる権限がありません");
             return;
         }
         switch ($line[0]) {
@@ -117,18 +117,18 @@ class EventListener implements Listener
                 $item = explode(":", $line[1]);
                 if (count($item) == 1) $item[1] = 0;
                 if (!ctype_digit($item[0])) {
-                    $player->sendMessage("§c> ID(数字)を書き込んでください");
+                    $player->sendMessage("§b【運営】>> §cID(数字)を書き込んでください");
                     return;
                 }
                 $itemName = Item::get((int)$item[0], (int)$item[1])->getName();
                 if (!ctype_digit($line[2])) {
-                    $player->sendMessage("§c> 数値を書き込んでください");
+                    $player->sendMessage("§b【運営】>> §c数値を書き込んでください");
                     return;
                 }
                 $amount = (int) $line[2];
                 $unit = EconomyAPI::getInstance()->getMonetaryUnit();
                 if (!ctype_digit($line[3])) {
-                    $player->sendMessage("§c> 数値を書き込んでください");
+                    $player->sendMessage("§b【運営】>> §c数値を書き込んでください");
                     return;
                 }
                 $price = (int) $line[3];
@@ -137,7 +137,7 @@ class EventListener implements Listener
                 $event->setLine(2, "§l".$amount);
                 $event->setLine(3, "§l".$unit.$price);
                 $this->getProvider()->setShopDataOfSellAndPurchase($event->getBlock(), $item[0], $item[1], $amount, $price);
-                $player->sendMessage("§a> 販売看板を作りました");
+                $player->sendMessage("§b【運営】>> §e販売看板を作りました");
                 break;
 
             case "sell":
@@ -145,18 +145,18 @@ class EventListener implements Listener
                 $item = explode(":", $line[1]);
                 if (count($item) == 1) $item[1] = 0;
                 if ($item[1] == null) {
-                    $player->sendMessage("§c> しっかりとID:METAの形で書き込んでください");
+                    $player->sendMessage("§b【運営】>> §cしっかりとID:METAの形で書き込んでください");
                     return;
                 }
                 $itemName = Item::get((int)$item[0], (int)$item[1])->getName();
                 if (!ctype_digit($line[2])) {
-                    $player->sendMessage("§c> 数値を書き込んでください");
+                    $player->sendMessage("§b【運営】>> §c数値を書き込んでください");
                     return;
                 }
                 $amount = (int) $line[2];
                 $unit = EconomyAPI::getInstance()->getMonetaryUnit();
                 if (!ctype_digit($line[3])) {
-                    $player->sendMessage("§c> 数値を書き込んでください");
+                    $player->sendMessage("§b【運営】>> §c数値を書き込んでください");
                     return;
                 }
                 $price = (int) $line[3];
@@ -165,23 +165,7 @@ class EventListener implements Listener
                 $event->setLine(2, "§l".$amount);
                 $event->setLine(3, "§l".$unit.$price);
                 $this->getProvider()->setShopDataOfSellAndPurchase($event->getBlock(), $item[0], $item[1], $amount, $price);
-                $player->sendMessage("§a> 売却看板を作りました");
-                break;
-
-            case "change":
-            case "trade":
-                $material = explode(":", $line[1]);
-                $goods = explode(":", $line[2]);
-                if (count($material) < 3) return;
-                $materialItem = Item::get((int)$material[0], (int)$material[1])->getName();
-                if (count($goods) < 3) return;
-                $goodsItem = Item::get((int)$goods[0], (int)$goods[1])->getName();
-                $event->setLine(0, API::EXCHANGE_TAG);
-                $event->setLine(1, "§l送: ".$materialItem." ".$material[2]."個");
-                $event->setLine(2, "§l受: ".$goodsItem." ".$goods[2]."個");
-                if (!ctype_digit($goods[2])) return;
-                $this->getProvider()->setShopDataOfExchange($event->getBlock(), $material[0], $material[1], $material[2], $goods[0], $goods[1], $goods[2]);
-                $player->sendMessage("§a> トレード看板を作りました");
+                $player->sendMessage("§b【運営】>> §e売却看板を作りました");
                 break;
         }
     }
@@ -208,7 +192,7 @@ class EventListener implements Listener
 	
     public function checkDoProgress($player, $block, $name)
     {
-        $player->sendMessage("§bもう一度タッチしてください");
+        $player->sendMessage("§b【運営】>> §eもう一度タッチしてください");
 	$this->cooltime[$name] = $block->asVector3();
         $handler = $this->owner->getScheduler()->scheduleDelayedTask(
             new class($this->owner, $name) extends Task
