@@ -192,7 +192,12 @@ class EventListener implements Listener
 	
     public function checkDoProgress($player, $block, $name)
     {
-        $player->sendMessage("§b【運営】 >> §eもう一度タッチしてください");
+	$xyz = $this->getProvider()->getCoordinate($block);
+        $data = $this->getProvider()->getShopData($xyz);
+
+        $player->sendMessage("§b【運営】 >> §e{$data["COUNT"]}個 {$data["PRICE"]}円 です");
+        $player->sendMessage("§b【運営】 >> §eよろしければ もう一度タッチしてください");
+	    
 	$this->cooltime[$name] = $block->asVector3();
         $handler = $this->owner->getScheduler()->scheduleDelayedTask(
             new class($this->owner, $name) extends Task
