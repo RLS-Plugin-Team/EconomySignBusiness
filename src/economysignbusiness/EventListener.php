@@ -14,6 +14,8 @@ use economysignbusiness\utils\API;
 use economysignbusiness\utils\NameManager;
 use onebone\economyapi\EconomyAPI;
 
+use Jpnlibrary\JpnLibrary;
+
 class EventListener implements Listener
 {
 	
@@ -120,7 +122,8 @@ class EventListener implements Listener
                     $player->sendMessage("§b【運営】 >> §cID(数字)を書き込んでください");
                     return;
                 }
-                $itemName = Item::get((int)$item[0], (int)$item[1])->getName();
+                //$itemName = Item::get((int)$item[0], (int)$item[1])->getName();
+	        $itemName = JpnLibrary::getInstance()->getJpnName((int)$item[0],(int)$item[1]);
                 if (!ctype_digit($line[2])) {
                     $player->sendMessage("§b【運営】 >> §c数値を書き込んでください");
                     return;
@@ -148,7 +151,8 @@ class EventListener implements Listener
                     $player->sendMessage("§b【運営】 >> §cしっかりとID:METAの形で書き込んでください");
                     return;
                 }
-                $itemName = Item::get((int)$item[0], (int)$item[1])->getName();
+                //$itemName = Item::get((int)$item[0], (int)$item[1])->getName();
+		$itemName = JpnLibrary::getInstance()->getJpnName((int)$item[0],(int)$item[1]);
                 if (!ctype_digit($line[2])) {
                     $player->sendMessage("§b【運営】 >> §c数値を書き込んでください");
                     return;
