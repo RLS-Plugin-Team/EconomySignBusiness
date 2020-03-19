@@ -123,7 +123,7 @@ class EventListener implements Listener
                     return;
                 }
                 //$itemName = Item::get((int)$item[0], (int)$item[1])->getName();
-	        $itemName = JpnLibrary::getInstance()->getJpnName((int)$item[0],(int)$item[1]);
+	        $itemName = JpnLibrary::getInstance()->getJpnName("{$item[0]}:{$item[1]}");
                 if (!ctype_digit($line[2])) {
                     $player->sendMessage("§b【運営】 >> §c数値を書き込んでください");
                     return;
@@ -152,7 +152,7 @@ class EventListener implements Listener
                     return;
                 }
                 //$itemName = Item::get((int)$item[0], (int)$item[1])->getName();
-		$itemName = JpnLibrary::getInstance()->getJpnName((int)$item[0],(int)$item[1]);
+		$itemName = JpnLibrary::getInstance()->getJpnName("{$item[0]}:{$item[1]}");
                 if (!ctype_digit($line[2])) {
                     $player->sendMessage("§b【運営】 >> §c数値を書き込んでください");
                     return;
